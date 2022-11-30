@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import requests
 import urllib3
 import base64
